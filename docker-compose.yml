@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  postgres:
+    restart: always
+    image: postgres:13
+    container_name: serviteca_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - .data/:/tmp
+    env_file:
+      - .env
+
+  web:
+    restart: always
+    container_name: serviteca_web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/src
+    env_file:
+      - .env
+    command: >
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
