@@ -6,10 +6,10 @@ from apps.client.models import Client
 
 class Vehicle(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    brand = models.CharField(max_length=30)
-    model = models.CharField(max_length=30)
+    brand = models.CharField(max_length=20)
+    model = models.CharField(max_length=20)
     year = models.IntegerField()
-    plate_number = models.CharField(max_length=10)
+    plate_number = models.CharField(max_length=7)
 
     class Meta:
         verbose_name = 'Vehículo'
