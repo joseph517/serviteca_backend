@@ -25,7 +25,8 @@ class ObtainTokenPairView(TokenObtainPairView):
         data = {
             'refresh': str(refresh),
             'access': str(access_token),
-            'user_id': user.id
+            'user_id': user.id,
+            'rol': user.is_staff
         }
 
         return Response(data)
