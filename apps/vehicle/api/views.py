@@ -39,6 +39,9 @@ class UserVehicleListAPIVIEW(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
-        queryset = Vehicle.objects.filter(client=user)
-        return queryset
+            user = self.request.user
+            if(user.is_staff):
+                queryset = Vehicle.objects.all()
+            else:
+                queryset = Vehicle.objects.filter(client=user)
+            return queryset
