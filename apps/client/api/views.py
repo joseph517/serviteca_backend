@@ -2,7 +2,7 @@ from apps.client.models import Client
 from rest_framework import generics
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .serializers import CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer, ClientSerializer, ClientUpdateSerializer, DeleteClientSerializer
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.db import IntegrityError
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -26,7 +26,8 @@ class ObtainTokenPairView(TokenObtainPairView):
             'refresh': str(refresh),
             'access': str(access_token),
             'user_id': user.id,
-            'rol': user.is_staff
+            'rol': user.is_staff,
+            'name': user.name
         }
 
         return Response(data)
@@ -51,7 +52,7 @@ class CreateClientView(generics.CreateAPIView):
 class ListClientView(generics.ListAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 class UpdateClientView(generics.UpdateAPIView):
     queryset = Client.objects.all()
