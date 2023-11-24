@@ -1,5 +1,5 @@
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from apps.mechanic.models import Mechanic
 from apps.mechanic.api.serializers import MechanicSerializer
 
@@ -11,7 +11,7 @@ class MechanicListAPIView(generics.ListAPIView):
 class MechanicCreateAPIView(generics.CreateAPIView):
     queryset = Mechanic.objects.all()
     serializer_class = MechanicSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 class MechanicUpdateAPIView(generics.UpdateAPIView):
     queryset = Mechanic.objects.all()
